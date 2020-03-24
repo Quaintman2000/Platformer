@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -13,13 +15,14 @@ public class GameManager : MonoBehaviour
     public GameObject RetryButtonGameObject;
     public GameObject SpawnPointGameObject;
     public GameObject PlayerPregabGameObject;
+    public int currentScene;
 
     private Transform camTransform;
     private Transform playerTransform;
 
     public string gameState;
     public int playerLives = 3;
-    public GameManager instance;
+    public static GameManager instance;
     
 
     void Awake()
@@ -147,5 +150,19 @@ public class GameManager : MonoBehaviour
             Instantiate(PlayerPregabGameObject, SpawnPointGameObject.transform.position,
                 SpawnPointGameObject.transform.rotation);
         }
+    }
+    public void LoadLevel(string levelToLoad)
+    {
+        SceneManager.LoadScene(levelToLoad);
+        currentScene++;
+    }
+    public void LoadLevel(int indexToLoad)
+    {
+        SceneManager.LoadScene(indexToLoad);
+        currentScene = indexToLoad;
+    }
+    public void LoadNextScene()
+    {
+        //SceneManager.LoadScene
     }
 }
