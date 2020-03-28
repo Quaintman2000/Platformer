@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public GameObject RetryButtonGameObject;
     public GameObject SpawnPointGameObject;
     public GameObject PlayerPregabGameObject;
-    public int currentScene;
+    
 
     private Transform camTransform;
     private Transform playerTransform;
@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     public string gameState;
     public int playerLives = 3;
     public static GameManager instance;
-    
+    [HideInInspector] public int currentScene;
 
     void Awake()
     {
@@ -151,6 +151,10 @@ public class GameManager : MonoBehaviour
                 SpawnPointGameObject.transform.rotation);
         }
     }
+    /// <summary>
+    /// Loads the desired scene by name.
+    /// </summary>
+    /// <param name="levelToLoad">Name of the level to load</param>
     public void LoadLevel(string levelToLoad)
     {
         SceneManager.LoadScene(levelToLoad);
@@ -163,6 +167,6 @@ public class GameManager : MonoBehaviour
     }
     public void LoadNextScene()
     {
-        //SceneManager.LoadScene
+        SceneManager.LoadScene(currentScene + 1);
     }
 }

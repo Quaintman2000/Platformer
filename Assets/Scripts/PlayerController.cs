@@ -5,16 +5,39 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private float maxHP;
     private Transform tf;
     private Rigidbody2D rb2d;
     private SpriteRenderer sr;
     private Animator animator;
 
-    public float speed = 5;
+    /// <summary>
+    /// The movement speed of the player.
+    /// </summary>
+    public float MovementSpeed = 5;
+    /// <summary>
+    /// The amount of force applied vertially when jumping.
+    /// </summary>
     public float jumpForce = 10;
     public Transform groundPoint;
     public bool isGrounded = false;
 
+    public float MaxHP
+    {
+        get
+        {
+            return maxHP;
+        }
+        private set
+        {
+            maxHP = value;
+            if (maxHP <= 0)
+            {
+                maxHP = 1;
+                Debug.LogWarning("[PlayerController] attempted to set maxHP lower than or equal to 0.");
+            }
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +50,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float xMovement = Input.GetAxis("Horizontal") * speed;
+        float xMovement = Input.GetAxis("Horizontal") * MovementSpeed;
         rb2d.velocity = new Vector2(xMovement, rb2d.velocity.y);
 
         if (xMovement > 0)

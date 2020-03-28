@@ -2075,9 +2075,9 @@ MonoBehaviour:
   SpawnPointGameObject: {fileID: 398738665}
   PlayerPregabGameObject: {fileID: 411225723966475930, guid: dedcd142c04288043b2877c0f5551e8a,
     type: 3}
-  currentScene: 0
   gameState: 
   playerLives: 3
+  currentScene: 0
 --- !u!1001 &1600386113058616938
 PrefabInstance:
   m_ObjectHideFlags: 0
