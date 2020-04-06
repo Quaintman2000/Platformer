@@ -7,7 +7,7 @@ TextureImporter:
     second: adventurer_tilesheet_0
   - first:
       213: -8590976481669380332
-    second: adventurer_tilesheet_1
+    second: adventurer_Jump_1
   - first:
       213: -3375247832252135793
     second: adventurer_tilesheet_2
@@ -16,7 +16,7 @@ TextureImporter:
     second: adventurer_tilesheet_3
   - first:
       213: -1710570205710794173
-    second: adventurer_tilesheet_4
+    second: adventurer_fall_4
   - first:
       213: 2192980651034332916
     second: adventurer_tilesheet_5
@@ -179,7 +179,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tilesheet_1
+      name: adventurer_Jump_1
       rect:
         serializedVersion: 2
         x: 84
@@ -242,7 +242,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer_tilesheet_4
+      name: adventurer_fall_4
       rect:
         serializedVersion: 2
         x: 321

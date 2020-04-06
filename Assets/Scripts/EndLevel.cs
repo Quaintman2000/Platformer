@@ -4,12 +4,46 @@ using UnityEngine;
 
 public class EndLevel : MonoBehaviour
 {
+    //adds points when the player picks up the coin
+    public int points;
+
+    //audio clip to play when pick up is collected;
+    public AudioClip audioClip;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //if player enters the the collider of this object, then load next level
-        if(collision.gameObject.name == "Player")
+        if (collision.gameObject.tag == "Player")
         {
-            GameManager.instance.LoadNextScene();
+            //reward the player with points.
+            GameManager.instance.playerScore += points;
+            //Play Coid sound effect.
+            AudioSource.PlayClipAtPoint(audioClip, transform.position);
+            //if on the last level
+            if (GameManager.instance.currentScene == 3)
+            {
+                GameManager.instance.LoadLevel(4);
+            }
+            else
+            {
+                GameManager.instance.LoadNextScene();
+            }
+            //Destroy the coin.
+            Destroy(this.gameObject);
+            Destroy(collision.gameObject);
+            
         }
     }
 }

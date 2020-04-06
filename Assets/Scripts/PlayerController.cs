@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 10;
     public Transform groundPoint;
     public bool isGrounded = false;
+    public int additionalJumps = 1;
 
     public float MaxHP
     {
@@ -45,23 +46,40 @@ public class PlayerController : MonoBehaviour
         rb2d = gameObject.GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
         animator = gameObject.GetComponent<Animator>();
-    }
 
-    // Update is called once per frame
-    void Update()
+        if (GameManager.instance.playerTransform != null)
+        {
+            Debug.LogError("Had a duplicate player!");
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            GameManager.instance.playerTransform = this.gameObject.transform;
+        }
+    }
+        // Update is called once per frame
+        void Update()
     {
         float xMovement = Input.GetAxis("Horizontal") * MovementSpeed;
         rb2d.velocity = new Vector2(xMovement, rb2d.velocity.y);
-
-        if (xMovement > 0)
+        //if moving and on the ground
+        if (xMovement > 0 && isGrounded == true)
         {
             sr.flipX = false;
             animator.Play("PlayerWalk");
         }
-        else if (xMovement < 0)
+        else if(xMovement > 0)
+        {
+            sr.flipX = false;
+        }
+        else if (xMovement < 0 && isGrounded == true)
         {
             sr.flipX = true;
             animator.Play("PlayerWalk");
+        }
+        else if(xMovement < 0)
+        {
+            sr.flipX = true;
         }
         else
         {
@@ -73,20 +91,36 @@ public class PlayerController : MonoBehaviour
         if (hitInfo.collider != null)
         {
             isGrounded = true;
+            //replenish the extra jumps
+            additionalJumps = 1;
         }
         else
         {
             isGrounded = false;
         }
         // jump
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            rb2d.AddForce(Vector2.up * jumpForce);
+            //if on the ground or has one extra jump
+            if (isGrounded == true || additionalJumps != 0)
+            {
+                //if in the air, take a away an extra jump
+                if (isGrounded == false)
+                {
+                    additionalJumps--;
+                    rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
+                    rb2d.AddForce(Vector2.up * jumpForce);
+                }
+                else
+                {
+                    rb2d.AddForce(Vector2.up * jumpForce);
+                    
+                }
+
+            }
+            
         }
+        
     }
 
-    void OnDestroy()
-    {
-
-    }
 }

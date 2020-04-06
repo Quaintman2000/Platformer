@@ -6,77 +6,73 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject BackgroundImageGameObject;
-    public GameObject TitleTextGameObject;
-    public GameObject LostTextGameObject;
-    public GameObject WinTextGameObject;
-    public GameObject StartButtonGameObject;
-    public GameObject QuitButtonGameObject;
-    public GameObject RetryButtonGameObject;
+   
     public GameObject SpawnPointGameObject;
     public GameObject PlayerPregabGameObject;
-    
+
 
     private Transform camTransform;
-    private Transform playerTransform;
+    public Transform playerTransform;
 
     public string gameState;
     public int playerLives = 3;
     public static GameManager instance;
-    [HideInInspector] public int currentScene;
+    public int currentScene;
+    public int playerScore = 0;
 
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
+
         }
         else
         {
             Destroy(this.gameObject);
         }
+
     }
     // Start is called before the first frame update
     void Start()
     {
-        StartScreen();
-        camTransform = GameObject.Find("Main Camera").gameObject.GetComponent<Transform>();
-        playerTransform = GameObject.Find("Player").gameObject.GetComponent<Transform>();
+        gameState = "Start Screen";
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        //have the camera follow the player
-        camTransform.position = new Vector3(playerTransform.position.x, playerTransform.position.y, camTransform.position.z);
-        Debug.Log(gameState);
+        
 
 
-        //check game states
-        if (gameState == "Start Screen")
-        {
-            //show start screen
-            StartScreen();
-        }
-        else if (gameState == "Game Running")
-        {
-            //do nothing
-        }
-        else if (gameState == "Game Lose")
-        {
-            //show game Lose screen
-            GameLose();
-        }
-        else if (gameState == "Game Win")
-        {
-            //show game win screen
-            GameWin();
-        }
-        else
-        {
-            Debug.LogError("Missing game state!");
-        }
+        ////check game states
+        //if (gameState == "Start Screen")
+        //{
+        //    //show start screen
+        //    StartScreen();
+        //}
+        //else if (gameState == "Game Running")
+        //{
+        //    // do nothin
+        //}
+        //else if (gameState == "Game Lose")
+        //{
+        //    //show game Lose screen
+        //    GameLose();
+        //}
+        //else if (gameState == "Game Win")
+        //{
+        //    //show game win screen
+        //    GameWin();
+        //}
+        //else
+        //{
+        //    Debug.LogError("Missing game state!");
+        //}
     }
+    
     //quits the game
     public void Quit()
     {
@@ -86,64 +82,43 @@ public class GameManager : MonoBehaviour
     //shows the start screen state
     public void StartScreen()
     {
-        //display start screen state
-        gameState = "Start Screen";
-        BackgroundImageGameObject.SetActive(true);
-        TitleTextGameObject.SetActive(true);
-        LostTextGameObject.SetActive(false);
-        WinTextGameObject.SetActive(false);
-        StartButtonGameObject.SetActive(true);
-        QuitButtonGameObject.SetActive(true);
-        RetryButtonGameObject.SetActive(false);
+        //load main menu
+        currentScene = 0;
+        LoadLevel(currentScene);
     }
     //change to game run state
     public void GameStart()
     {
         //reset lives to 3
         playerLives = 3;
-        
+
         //display game running state
-        gameState = "Game Running";
-        BackgroundImageGameObject.SetActive(false);
-        TitleTextGameObject.SetActive(false);
-        LostTextGameObject.SetActive(false);
-        WinTextGameObject.SetActive(false);
-        StartButtonGameObject.SetActive(false);
-        QuitButtonGameObject.SetActive(false);
-        RetryButtonGameObject.SetActive(false);
+
+        GameManager.instance.LoadNextScene();
+
     }
     //change to game lose state
     public void GameLose()
     {
-        //display game lose state
-        gameState = "Game Lose";
-        BackgroundImageGameObject.SetActive(true);
-        TitleTextGameObject.SetActive(false);
-        LostTextGameObject.SetActive(true);
-        WinTextGameObject.SetActive(false);
-        StartButtonGameObject.SetActive(false);
-        QuitButtonGameObject.SetActive(true);
-        RetryButtonGameObject.SetActive(true);
+        //go to lose scene
+        currentScene = 5;
+        LoadLevel(currentScene);
     }
     //change to game win state
     public void GameWin()
     {
-        //display game win state
-        gameState = "Game Win";
-        BackgroundImageGameObject.SetActive(true);
-        TitleTextGameObject.SetActive(false);
-        LostTextGameObject.SetActive(true);
-        WinTextGameObject.SetActive(false);
-        StartButtonGameObject.SetActive(false);
-        QuitButtonGameObject.SetActive(true);
-        RetryButtonGameObject.SetActive(true);
+        //return to win scene
+        currentScene = 4;
+        LoadLevel(currentScene);
+
     }
 
     public void Respawn()
     {
         if (playerLives == 0)
         {
-            gameState = "Game Lose";
+
+            GameLose();
         }
         else
         {
@@ -167,6 +142,6 @@ public class GameManager : MonoBehaviour
     }
     public void LoadNextScene()
     {
-        SceneManager.LoadScene(currentScene + 1);
+        SceneManager.LoadScene(currentScene += 1);
     }
 }
