@@ -11,14 +11,17 @@ public class PowerUpSpawn : MonoBehaviour
 
     private void Start()
     {
+        //spawn the powerup token at start
         SpawnPowerUp();
     }
 
     public void SpawnPowerUp()
     {
+        //if there isnt a spawned coin
         if (spawnedPowerUp == null)
         {
-            spawnedPowerUp = Instantiate(powerupPrefab, transform.position,Quaternion.identity);
+            //spawn a coin on its position
+            spawnedPowerUp = Instantiate(powerupPrefab, transform.position, Quaternion.identity);
         }
     }
 }

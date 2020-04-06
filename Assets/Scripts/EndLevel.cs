@@ -25,6 +25,7 @@ public class EndLevel : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //if the player interacts with the end level coin
         if (collision.gameObject.tag == "Player")
         {
             //reward the player with points.
@@ -34,16 +35,19 @@ public class EndLevel : MonoBehaviour
             //if on the last level
             if (GameManager.instance.currentScene == 3)
             {
+                //load the win screen
                 GameManager.instance.LoadLevel(4);
             }
+            //if not on the last level
             else
             {
+                //load the next lvl
                 GameManager.instance.LoadNextScene();
             }
-            //Destroy the coin.
+            //Destroy the coin and the player
             Destroy(this.gameObject);
             Destroy(collision.gameObject);
-            
+
         }
     }
 }

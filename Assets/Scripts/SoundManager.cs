@@ -16,6 +16,7 @@ public class SoundManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //these was used to test out sounds
         if (Input.GetKeyDown(KeyCode.A))
         {
             audioSource.clip = screamClip;
@@ -32,7 +33,7 @@ public class SoundManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            if(audioSource.isPlaying)
+            if (audioSource.isPlaying)
             {
                 audioSource.Pause();
             }

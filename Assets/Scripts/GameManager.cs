@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-   
+
     public GameObject SpawnPointGameObject;
     public GameObject PlayerPregabGameObject;
 
@@ -22,12 +22,16 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        //if theres no gamemanager
         if (instance == null)
         {
+            //set this gameobject as the game manager
             instance = this;
+            //set this to not be destroyed when loading scenes
             DontDestroyOnLoad(gameObject);
 
         }
+        //if there is already game manager
         else
         {
             Destroy(this.gameObject);
@@ -37,14 +41,13 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameState = "Start Screen";
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
 
 
         ////check game states
@@ -72,7 +75,7 @@ public class GameManager : MonoBehaviour
         //    Debug.LogError("Missing game state!");
         //}
     }
-    
+
     //quits the game
     public void Quit()
     {
@@ -112,16 +115,19 @@ public class GameManager : MonoBehaviour
         LoadLevel(currentScene);
 
     }
-
+    //respawns the player
     public void Respawn()
     {
+        //if the player runs out of lives
         if (playerLives == 0)
         {
-
+            //set the state to game lose
             GameLose();
         }
+        //if the player still has lives left
         else
         {
+            //spawn the player at the desired spawn point
             Instantiate(PlayerPregabGameObject, SpawnPointGameObject.transform.position,
                 SpawnPointGameObject.transform.rotation);
         }
@@ -132,16 +138,22 @@ public class GameManager : MonoBehaviour
     /// <param name="levelToLoad">Name of the level to load</param>
     public void LoadLevel(string levelToLoad)
     {
+        //load desired lvl by name
         SceneManager.LoadScene(levelToLoad);
+        //add 1 to current scene
         currentScene++;
     }
     public void LoadLevel(int indexToLoad)
     {
+        //load desired level by index
         SceneManager.LoadScene(indexToLoad);
+        //change current scene # to the scene #
         currentScene = indexToLoad;
     }
+    //loads the next scene
     public void LoadNextScene()
     {
+        //loads the scene right after the current one
         SceneManager.LoadScene(currentScene += 1);
     }
 }

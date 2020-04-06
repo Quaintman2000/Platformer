@@ -25,11 +25,13 @@ public class CheckPoint : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag=="Player")
+        //if the checkpoint coin interacts with the player
+        if (collision.gameObject.tag == "Player")
         {
+            //set the spawnpoint to the checkpoint
             GameManager.instance.SpawnPointGameObject = GameObject.Find("CheckPointSpawn");
-           //reward the player with points.
-           GameManager.instance.playerScore += points;
+            //reward the player with points.
+            GameManager.instance.playerScore += points;
             //Play Coid sound effect.
             AudioSource.PlayClipAtPoint(audioClip, transform.position);
             //Destroy the coin.

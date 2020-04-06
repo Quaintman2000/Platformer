@@ -230,7 +230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementSpeed: 5
-  jumpForce: 350
+  jumpForce: 450
   groundPoint: {fileID: 4429255900222599561}
   isGrounded: 0
   additionalJumps: 1
